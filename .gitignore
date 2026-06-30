@@ -1,0 +1,4 @@
+assets/_*
+assets/*-orig*
+*.zip
+.DS_Store
