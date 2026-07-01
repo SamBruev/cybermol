@@ -76,6 +76,8 @@
   .nav{ display:flex; align-items:center; justify-content:space-between; height:74px; gap:20px; }
   .logo{ display:flex; align-items:center; gap:11px; font-weight:900; letter-spacing:.02em; font-size:20px; }
   .logo img{ height:40px; width:auto; }
+  .logo-txt{ display:flex; flex-direction:column; line-height:1; }
+  .logo-txt small{ font-size:10px; font-weight:600; letter-spacing:.01em; color:var(--muted); margin-top:3px; }
   .menu{ display:flex; align-items:center; gap:28px; }
   .menu a{ font-size:15px; font-weight:500; color:#2C2D31; transition:color .15s; }
   .menu a:hover{ color:var(--accent); }
@@ -125,7 +127,7 @@
 
   /* ── Кинозаставка при входе ─────────────────────────────── */
   #intro{ position:fixed; inset:0; z-index:200; background:#0B0B0D; display:grid; place-items:center; overflow:hidden;
-    animation:introOut .8s cubic-bezier(.7,0,.3,1) 4s forwards; }
+    animation:introOut .8s cubic-bezier(.7,0,.3,1) 6s forwards; }
   #intro.gone{ animation:introOut .5s cubic-bezier(.7,0,.3,1) forwards; }
   #intro .in-wrap{ position:relative; text-align:center; padding:24px; }
   #intro .in-top{ position:fixed; left:0; right:0; top:13%; padding:0 16px; text-align:center; }
@@ -268,6 +270,18 @@
   .form input:focus,.form textarea:focus,.form select:focus{ outline:none; border-color:var(--ink); background:#fff; }
   .form .note{ font-size:13px; color:var(--muted); margin-top:10px; }
 
+  /* ── Документы ──────────────────────────────────────────── */
+  .docs-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+  .doc{ display:flex; align-items:center; gap:16px; background:#fff; border:1px solid var(--line); border-radius:14px;
+    padding:18px 20px; box-shadow:var(--shadow-sm); transition:transform .18s ease, box-shadow .25s ease, border-color .2s; }
+  .doc:hover{ transform:translateY(-3px); box-shadow:var(--shadow); border-color:transparent; }
+  .doc .di{ width:46px; height:46px; border-radius:12px; background:var(--soft); color:var(--accent); display:grid; place-items:center; flex:none; }
+  .doc .dt{ flex:1; min-width:0; }
+  .doc .dt h4{ font-size:15px; font-weight:700; color:var(--ink); }
+  .doc .dt span{ font-size:12px; color:var(--muted); }
+  .doc .dl{ color:var(--muted); flex:none; transition:transform .2s ease, color .2s; }
+  .doc:hover .dl{ color:var(--accent); transform:translateY(2px); }
+
   /* ── Подвал ─────────────────────────────────────────────── */
   footer{ background:#000; color:rgba(255,255,255,.66); padding:56px 0 40px; }
   .foot{ display:grid; grid-template-columns:1fr auto auto; gap:64px; align-items:start; }
@@ -352,7 +366,7 @@
     .stats-grid{ gap:14px; }
     .foot{ grid-template-columns:1fr 1fr; gap:28px; }
     .gallery{ grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); }
-    .card-wide{ flex-direction:column; text-align:center; align-items:center; }
+    .card-wide{ flex-direction:row; text-align:left; align-items:center; padding:24px 28px; gap:22px; }
     section{ padding:66px 0; }
     .mentor-lead{ grid-template-columns:1fr; text-align:center; justify-items:center; }
     .mentor-sub-wrap{ grid-template-columns:1fr; }
@@ -376,7 +390,8 @@
     .card h3{ font-size:17px; }
     .card p{ font-size:14px; }
     .card h3,.card p,.quote p,.quote .pname,.quote .pmeta{ overflow-wrap:break-word; }
-    .card-wide{ padding:26px; gap:18px; }
+    .card-wide{ padding:16px 18px; gap:16px; }
+    .card-wide .ic{ width:50px; height:50px; }
     .mentor-lead{ padding:24px; }
     .mentor-lead .ava{ width:116px; height:116px; font-size:34px; }
     .mentor-sub{ padding:18px 20px; }
@@ -385,6 +400,7 @@
     .quote .person{ gap:10px; margin-top:14px; padding-top:14px; }
     .perk{ padding:22px; }
     .form{ padding:22px; }
+    .docs-grid{ grid-template-columns:1fr; }
     .foot{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px 16px; }
     .foot > .foot-col:first-child{ grid-column:1 / -1; }
     .foot a{ overflow-wrap:break-word; }
@@ -429,7 +445,7 @@
 <header>
   <div class="wrap">
     <nav class="nav">
-      <a class="logo" href="#top"><img src="assets/logo-mark.png" alt="Кибермол" /> КИБЕРМОЛ</a>
+      <a class="logo" href="#top"><img src="assets/logo-mark.png" alt="Кибермол" /><span class="logo-txt">КИБЕРМОЛ<small>Москва · Капотня · 5/26</small></span></a>
       <input type="checkbox" id="navtoggle" />
       <label class="burger" for="navtoggle" aria-label="Меню"><span></span></label>
       <div class="menu">
@@ -438,6 +454,7 @@
         <a href="#events">Мероприятия</a>
         <a href="#awards">Награды</a>
         <a href="#partners">Партнёры</a>
+        <a href="#docs">Документы</a>
       </div>
       <div><a href="#support" class="btn btn-accent" style="height:46px">Поддержать</a></div>
     </nav>
@@ -449,7 +466,7 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow">Молодёжное движение · Москва, Капотня</span>
+      <span class="eyebrow">Молодёжное движение</span>
       <h1>Здоровая молодёжь — <span class="ac">сильная Россия</span></h1>
       <p class="lead">«Кибермол» объединяет молодёжь вокруг спорта, патриотизма и настоящих ценностей. Помогаем найти своё дело, обрести наставников и расти — телом и духом.</p>
       <div class="hero-actions">
@@ -615,11 +632,11 @@
     </div>
     <div class="mentor-sub-wrap">
       <div class="mentor-sub">
-        <div class="ava"><img src="assets/mentor-bruev.jpg" alt="Бруев Семён Сергеевич" /></div>
+        <div class="ava"><img src="assets/avatar-bruev.jpg" alt="Бруев Семён Сергеевич" /></div>
         <div>
           <h4>Бруев Семён Сергеевич</h4>
           <div class="role">Партнёр движения · наставник</div>
-          <p>Звукорежиссёр и музыкальный продюсер с высшим профильным образованием — выпускник ИСИ (2018). Проводит мастер-классы по музыкальному искусству — в учебных заведениях и на коммерческих площадках — в разных регионах России, в том числе в Хакасии, Туле и Санкт-Петербурге. Отмечен наградами и благодарностями, среди которых — благодарность главы района Капотня.</p>
+          <p>Музыкальный звукорежиссёр с высшим профильным образованием — выпускник ИСИ (2018). Проводит мастер-классы по музыкальному искусству — в учебных заведениях и на коммерческих площадках — в разных регионах России, в том числе в Хакасии, Туле и Санкт-Петербурге. Отмечен благодарностью главы района Капотня.</p>
         </div>
       </div>
     </div>
@@ -695,6 +712,7 @@
       <div class="contacts">
         <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> <a href="mailto:frmcybermol@yandex.ru">frmcybermol@yandex.ru</a></div>
         <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.72c.13.9.36 1.78.7 2.63a2 2 0 0 1-.45 2.11L8.1 9.9a16 16 0 0 0 6 6l1.44-1.25a2 2 0 0 1 2.11-.45c.85.34 1.73.57 2.63.7A2 2 0 0 1 22 16.92z"/></svg> <a href="tel:+79264129010">+7 (926) 412-90-10</a></div>
+        <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><path d="M12 21s-7-6.3-7-11a7 7 0 0 1 14 0c0 4.7-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg> Москва, Капотня, 5-й квартал, д. 26</div>
       </div>
     </div>
     <form class="form" id="joinForm">
@@ -713,6 +731,40 @@
   </div>
 </section>
 
+<!-- ДОКУМЕНТЫ -->
+<section id="docs" style="background:var(--soft)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Открытость</span>
+      <h2>Документы</h2>
+      <p class="lead" style="margin-top:16px">Учредительные и регистрационные документы организации, реквизиты и техническая информация — открыто и в одном месте.</p>
+    </div>
+    <div class="docs-grid">
+      <a class="doc" href="#" aria-label="Свидетельство ИНН">
+        <div class="di"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></div>
+        <div class="dt"><h4>Свидетельство ИНН</h4><span>Налоговый учёт · PDF</span></div>
+        <span class="dl"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 20h14"/></svg></span>
+      </a>
+      <a class="doc" href="#" aria-label="Лист записи ЕГРЮЛ">
+        <div class="di"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></div>
+        <div class="dt"><h4>Лист записи ЕГРЮЛ</h4><span>Регистрация · ОГРН</span></div>
+        <span class="dl"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 20h14"/></svg></span>
+      </a>
+      <a class="doc" href="#" aria-label="Устав организации">
+        <div class="di"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></div>
+        <div class="dt"><h4>Устав организации</h4><span>Учредительный документ · PDF</span></div>
+        <span class="dl"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 20h14"/></svg></span>
+      </a>
+      <a class="doc" href="#" aria-label="Реквизиты организации">
+        <div class="di"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></div>
+        <div class="dt"><h4>Реквизиты</h4><span>Для партнёров и пожертвований</span></div>
+        <span class="dl"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 20h14"/></svg></span>
+      </a>
+    </div>
+    <p style="font-size:13px; color:var(--muted); margin-top:18px">Файлы документов подключим по мере готовности — место в разделе уже готово.</p>
+  </div>
+</section>
+
 <!-- ПОДВАЛ -->
 <footer>
   <div class="wrap">
@@ -726,12 +778,13 @@
       <div class="foot-col">
         <strong>Разделы</strong>
         <a href="#about">О нас</a><a href="#directions">Направления</a><a href="#events">Мероприятия</a>
-        <a href="#awards">Награды</a><a href="#partners">Партнёры</a><a href="#support">Поддержать</a>
+        <a href="#awards">Награды</a><a href="#partners">Партнёры</a><a href="#docs">Документы</a><a href="#support">Поддержать</a>
       </div>
       <div class="foot-col">
         <strong>Контакты</strong>
         <a href="mailto:frmcybermol@yandex.ru">frmcybermol@yandex.ru</a>
         <a href="tel:+79264129010">+7 (926) 412-90-10</a>
+        <span>Москва, Капотня, 5-й квартал, д. 26</span>
       </div>
     </div>
     <div style="text-align:center; margin-top:30px; padding-top:24px; border-top:1px solid rgba(255,255,255,.12);">
