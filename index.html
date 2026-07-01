@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
 <title>Кибермол — молодёжное движение | Здоровая молодёжь — сильная Россия</title>
 <meta name="description" content="Кибермол — молодёжное движение из Москвы. Спорт, патриотизм и развитие молодёжи: бокс, волонтёрство, мероприятия и поддержка. Здоровая молодёжь — сильная Россия." />
 
@@ -86,6 +86,9 @@
 
   /* ── Hero ───────────────────────────────────────────────── */
   .hero{ position:relative; overflow:hidden; padding:84px 0 78px; background:var(--bg); }
+  .hero::before{ content:''; position:absolute; right:-6%; top:50%; transform:translateY(-50%); width:min(560px,84vw); aspect-ratio:1/1;
+    background:url(assets/logo-mark.png) center/contain no-repeat; opacity:.06; filter:blur(2px); pointer-events:none; z-index:0; }
+  .hero-grid{ position:relative; z-index:1; }
   .hero-grid{ display:grid; grid-template-columns:1.15fr .85fr; gap:54px; align-items:center; }
   .hero h1{ font-size:clamp(36px,5.6vw,62px); font-weight:900; letter-spacing:-.035em; }
   .hero h1 .ac{ color:var(--accent); }
@@ -249,7 +252,8 @@
     .burger{ display:block; }
     .hero-grid,.events-grid,.join-grid{ grid-template-columns:1fr; }
     .hero-visual{ max-width:360px; margin:0 auto; }
-    .cards,.quotes{ grid-template-columns:1fr 1fr; }
+    .cards{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .quotes{ grid-template-columns:1fr; }
     .support .perks{ grid-template-columns:1fr; }
     .stats-grid{ gap:14px; }
     .foot{ grid-template-columns:1fr 1fr; gap:28px; }
@@ -279,17 +283,21 @@
     .sec-head{ margin-bottom:30px; }
     .card{ padding:18px; }
     .card .ic{ width:46px; height:46px; margin-bottom:12px; }
+    .card h3{ font-size:17px; }
+    .card p{ font-size:14px; }
+    .card h3,.card p,.quote p,.quote .pname,.quote .pmeta{ overflow-wrap:break-word; }
     .card-wide{ padding:26px; gap:18px; }
     .mentor-lead{ padding:24px; }
     .mentor-lead .ava{ width:116px; height:116px; font-size:34px; }
     .mentor-sub{ padding:18px 20px; }
-    .quote{ padding:18px; }
+    .quote{ padding:22px; }
     .quote .pava{ width:40px; height:40px; }
     .quote .person{ gap:10px; margin-top:14px; padding-top:14px; }
     .perk{ padding:22px; }
     .form{ padding:22px; }
-    .foot{ grid-template-columns:1fr 1fr; gap:24px 18px; }
+    .foot{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px 16px; }
     .foot > .foot-col:first-child{ grid-column:1 / -1; }
+    .foot a{ overflow-wrap:break-word; }
     .vk-box{ min-height:340px; }
     .photoband{ height:300px; }
     .stat .num{ font-size:29px; }
@@ -342,11 +350,6 @@
       <div class="hero-actions">
         <a href="#join" class="btn btn-primary">Стать участником</a>
         <a href="#support" class="btn btn-ghost">Поддержать движение</a>
-      </div>
-      <div class="trust">
-        <div><b>с 2022</b> года</div>
-        <div><b>19+</b> наград и благодарностей</div>
-        <div><b>34</b> воспитанника-разрядника</div>
       </div>
     </div>
     <div class="hero-visual"><img src="assets/logo-mark.png" alt="Эмблема движения Кибермол" /></div>
@@ -425,7 +428,7 @@
         <div class="ic"><img src="assets/studio-symbol.png" alt="Студия Sam Bruev" style="width:100%; height:100%; object-fit:contain; padding:9px;" /></div>
         <div>
           <h3>Студия звукозаписи и музыкальное искусство</h3>
-          <p>Профессиональная запись, сведение и продюсирование, работа со звуком и мастер-классы по звукорежиссуре и музыкальному искусству. Помогаем молодым музыкантам раскрыть талант, расти и создавать качественный материал — от первой идеи до готового трека.</p>
+          <p>Работа со звуком и мастер-классы по звукорежиссуре. Помогаем молодым музыкантам раскрыть талант, расти и создавать качественный материал — от первой идеи до готового трека.</p>
         </div>
       </div>
     </div>
@@ -580,8 +583,8 @@
       <h2>Оставьте заявку на участие</h2>
       <p class="lead" style="margin-top:14px">Любому человеку мы найдём занятие по душе. Оставьте заявку — модератор проверит её и свяжется с вами.</p>
       <div class="contacts">
-        <div>✉ <a href="mailto:frmcybermol@yandex.ru">frmcybermol@yandex.ru</a></div>
-        <div>✆ <a href="tel:+79264129010">+7 (926) 412-90-10</a></div>
+        <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg> <a href="mailto:frmcybermol@yandex.ru">frmcybermol@yandex.ru</a></div>
+        <div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.72c.13.9.36 1.78.7 2.63a2 2 0 0 1-.45 2.11L8.1 9.9a16 16 0 0 0 6 6l1.44-1.25a2 2 0 0 1 2.11-.45c.85.34 1.73.57 2.63.7A2 2 0 0 1 22 16.92z"/></svg> <a href="tel:+79264129010">+7 (926) 412-90-10</a></div>
       </div>
     </div>
     <form class="form" id="joinForm">
@@ -622,9 +625,9 @@
       </div>
     </div>
     <div style="text-align:center; margin-top:30px; padding-top:24px; border-top:1px solid rgba(255,255,255,.12);">
-      <img src="assets/studio-symbol.png" alt="Студия звукозаписи Sam Bruev" style="height:74px; width:auto; margin:0 auto 12px; opacity:.92;" />
+      <img src="assets/studio-symbol.png" alt="Студия звукозаписи Sam Bruev" style="height:94px; width:auto; margin:0 auto 14px; opacity:.92;" />
       <div style="font-size:15px; font-weight:700; color:rgba(255,255,255,.88);">Настоящее искусство — сильная страна</div>
-      <div style="font-size:13px; color:rgba(255,255,255,.5); margin-top:4px;">Студия звукозаписи «Sam&nbsp;Bruev» · Москва, Капотня · разработка сайта</div>
+      <div style="font-size:13px; color:rgba(255,255,255,.5); margin:5px auto 0; max-width:42ch; text-wrap:balance; text-align:center;">Студия звукозаписи «Sam&nbsp;Bruev» · Москва,&nbsp;Капотня · разработка&nbsp;сайта</div>
     </div>
     <div class="copyright" style="text-align:center; border-top:none; margin-top:18px; padding-top:0;">© <span id="year"></span> Кибермол — молодёжное движение</div>
   </div>
@@ -695,6 +698,24 @@
       function step(ts){ if(!st)st=ts; var p=Math.min((ts-st)/d,1); node.textContent=pre+Math.floor(p*t)+suf; if(p<1)requestAnimationFrame(step); else node.textContent=pre+t+suf; }
       node.textContent=pre+'0'+suf; requestAnimationFrame(step);
     }
+  })();
+
+  /* Карусели: авто-движение + свайп пальцем (мобайл) */
+  (function(){
+    if(!(window.matchMedia && matchMedia('(max-width:900px)').matches)) return;
+    document.querySelectorAll('.marquee').forEach(function(m){
+      var paused=false, rt;
+      function tick(){
+        if(!paused && m.scrollWidth>m.clientWidth+4){
+          m.scrollLeft+=0.45;
+          if(m.scrollLeft>=m.scrollWidth/2) m.scrollLeft-=m.scrollWidth/2;
+        }
+        requestAnimationFrame(tick);
+      }
+      ['touchstart','pointerdown','wheel'].forEach(function(ev){ m.addEventListener(ev,function(){paused=true;clearTimeout(rt);},{passive:true}); });
+      ['touchend','pointerup','touchcancel'].forEach(function(ev){ m.addEventListener(ev,function(){clearTimeout(rt);rt=setTimeout(function(){paused=false;},1600);},{passive:true}); });
+      requestAnimationFrame(tick);
+    });
   })();
 </script>
 </body>
