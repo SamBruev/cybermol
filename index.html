@@ -242,7 +242,30 @@
   .card:hover .ic{ transform:scale(1.1) rotate(-5deg); }
   @keyframes floaty{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-9px); } }
   .hero-visual img{ animation:floaty 4.5s ease-in-out infinite; }
-  @media (prefers-reduced-motion:reduce){ .reveal{ opacity:1 !important; transform:none !important; transition:none; } .hero-visual img{ animation:none; } }
+
+  /* Раскрывающиеся карточки направлений */
+  .cards .card{ position:relative; }
+  .cards .card:not(.card-wide){ cursor:pointer; }
+  .cards .card .desc{ display:grid; grid-template-rows:0fr; opacity:0; margin-top:0;
+    transition:grid-template-rows .42s cubic-bezier(.2,.7,.2,1), opacity .3s ease, margin-top .42s cubic-bezier(.2,.7,.2,1); }
+  .cards .card.open .desc{ grid-template-rows:1fr; opacity:1; margin-top:10px; }
+  .cards .card .desc > p{ overflow:hidden; min-height:0; margin:0; }
+  .card-toggle{ position:absolute; top:20px; right:20px; width:30px; height:30px; border-radius:50%; background:var(--soft);
+    color:var(--ink); display:grid; place-items:center; transition:transform .45s cubic-bezier(.34,1.4,.5,1), background .25s, color .25s; }
+  .cards .card:hover .card-toggle{ background:var(--ink); color:#fff; }
+  .cards .card.open .card-toggle{ transform:rotate(135deg); background:var(--accent); color:#fff; }
+  @keyframes thint{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.16); } }
+  .cards .card:not(.open) .card-toggle{ animation:thint 2.6s ease-in-out infinite; }
+  .cards .card:hover .card-toggle{ animation:none; }
+
+  /* «Дорогая» деталь: блик по кнопкам */
+  .btn-primary,.btn-accent{ position:relative; overflow:hidden; }
+  .btn-primary::after,.btn-accent::after{ content:''; position:absolute; top:0; left:-140%; width:55%; height:100%;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.42),transparent); transform:skewX(-20deg); pointer-events:none; }
+  .btn-primary:hover::after,.btn-accent:hover::after{ animation:shine .85s ease; }
+  @keyframes shine{ to{ left:140%; } }
+
+  @media (prefers-reduced-motion:reduce){ .reveal{ opacity:1 !important; transform:none !important; transition:none; } .hero-visual img{ animation:none; } .card-toggle{ animation:none !important; } }
 
   @media (max-width:900px){
     .menu{ position:fixed; inset:74px 0 auto 0; flex-direction:column; gap:0; background:#fff;
@@ -715,6 +738,23 @@
       ['touchstart','pointerdown','wheel'].forEach(function(ev){ m.addEventListener(ev,function(){paused=true;clearTimeout(rt);},{passive:true}); });
       ['touchend','pointerup','touchcancel'].forEach(function(ev){ m.addEventListener(ev,function(){clearTimeout(rt);rt=setTimeout(function(){paused=false;},1600);},{passive:true}); });
       requestAnimationFrame(tick);
+    });
+  })();
+
+  /* Раскрывающиеся карточки направлений (нажми → описание) */
+  (function(){
+    document.querySelectorAll('.cards .card').forEach(function(card){
+      if(card.classList.contains('card-wide')) return;
+      var p=card.querySelector('p'); if(!p) return;
+      var desc=document.createElement('div'); desc.className='desc';
+      p.parentNode.insertBefore(desc,p); desc.appendChild(p);
+      var t=document.createElement('span'); t.className='card-toggle'; t.setAttribute('aria-hidden','true');
+      t.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
+      card.appendChild(t);
+      card.setAttribute('role','button'); card.setAttribute('tabindex','0');
+      function tog(){ card.classList.toggle('open'); }
+      card.addEventListener('click',tog);
+      card.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); tog(); } });
     });
   })();
 </script>
