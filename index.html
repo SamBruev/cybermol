@@ -94,10 +94,10 @@
       radial-gradient(30% 36% at 62% 22%, rgba(14,14,16,.08), transparent 70%);
     filter:blur(34px); animation:aurora 22s ease-in-out infinite alternate; will-change:transform; }
   /* Дышащая эмблема-щит (параллакс задаётся из JS) */
-  .hero-emb{ position:absolute; left:50%; top:50%; width:min(660px,90vw); aspect-ratio:1/1;
-    transform:translate(-50%,-50%); z-index:0; pointer-events:none; will-change:transform; }
-  .hero-emb span{ display:block; width:100%; height:100%;
-    background:url(assets/logo-mark.png) center/contain no-repeat; filter:blur(2px);
+  .bg-emb{ position:fixed; left:50%; top:50%; width:min(680px,92vw); aspect-ratio:1/1;
+    transform:translate(-50%,-50%); z-index:4; pointer-events:none; opacity:.05; will-change:transform; }
+  .bg-emb span{ display:block; width:100%; height:100%;
+    background:url(assets/logo-mark.png) center/contain no-repeat; filter:blur(1px);
     animation:breathe 7s ease-in-out infinite; }
   @keyframes aurora{ 0%{ transform:translate3d(-2.5%,-1.5%,0) scale(1.05); } 50%{ transform:translate3d(2.5%,2%,0) scale(1.14); } 100%{ transform:translate3d(-1.5%,1%,0) scale(1.06); } }
   @keyframes breathe{ 0%,100%{ transform:scale(1); opacity:.06; } 50%{ transform:scale(1.05); opacity:.10; } }
@@ -123,21 +123,23 @@
   .trust{ margin-top:30px; display:flex; gap:26px; flex-wrap:wrap; align-items:center; color:var(--muted); font-size:13px; }
   .trust b{ color:var(--ink); }
 
-  /* ── Искры в герое ──────────────────────────────────────── */
-  .hero-fx{ position:absolute; inset:0; z-index:0; pointer-events:none; }
-
   /* ── Кинозаставка при входе ─────────────────────────────── */
   #intro{ position:fixed; inset:0; z-index:200; background:#0B0B0D; display:grid; place-items:center; overflow:hidden;
-    animation:introOut .85s cubic-bezier(.7,0,.3,1) 2.15s forwards; }
+    animation:introOut .8s cubic-bezier(.7,0,.3,1) 30s forwards; }
   #intro.gone{ animation:introOut .5s cubic-bezier(.7,0,.3,1) forwards; }
   #intro .in-wrap{ position:relative; text-align:center; padding:24px; }
   #intro img{ width:min(230px,52vw); filter:drop-shadow(0 26px 80px rgba(225,29,42,.6));
     animation:introLogo 1.5s cubic-bezier(.2,.8,.2,1) both; }
-  #intro .in-slogan{ margin-top:24px; color:#fff; font-weight:800; letter-spacing:-.02em; line-height:1.15;
-    font-size:clamp(18px,4.4vw,28px); opacity:0; animation:introText .8s ease .7s forwards; }
+  #intro .in-slogan{ margin-top:24px; color:#fff; font-weight:800; letter-spacing:-.02em; line-height:1.28; white-space:nowrap;
+    font-size:clamp(17px,4vw,27px); opacity:0; animation:introText .8s ease .7s forwards; }
   #intro .in-slogan b{ color:var(--accent); }
-  #intro .in-skip{ position:fixed; left:0; right:0; bottom:7%; text-align:center; color:rgba(255,255,255,.5);
-    font-size:11px; letter-spacing:.16em; text-transform:uppercase; opacity:0; animation:introFade .6s ease 1.5s forwards; }
+  #intro .in-start{ margin-top:30px; display:inline-flex; align-items:center; justify-content:center; height:54px; padding:0 42px;
+    border:none; border-radius:999px; background:var(--accent); color:#fff; font:inherit; font-weight:700; font-size:16px; cursor:pointer;
+    box-shadow:0 16px 40px rgba(225,29,42,.4); opacity:0; animation:introFade .6s ease 1.35s forwards; transition:transform .15s, box-shadow .2s; }
+  #intro .in-start:hover{ transform:translateY(-2px); box-shadow:0 20px 48px rgba(225,29,42,.5); }
+  #intro .in-start:active{ transform:scale(.97); }
+  #intro .in-hint{ position:fixed; left:0; right:0; bottom:6%; text-align:center; color:rgba(255,255,255,.42);
+    font-size:11px; letter-spacing:.16em; text-transform:uppercase; opacity:0; animation:introFade .6s ease 1.9s forwards; }
   #intro::before{ content:''; position:absolute; left:50%; top:50%; width:82vmax; height:82vmax; border-radius:50%;
     transform:translate(-50%,-50%) scale(0); background:radial-gradient(circle, rgba(225,29,42,.42), transparent 60%);
     animation:introFlash 1.3s ease .1s both; }
@@ -330,9 +332,9 @@
 
   @media (prefers-reduced-motion:reduce){
     .reveal{ opacity:1 !important; transform:none !important; filter:none !important; transition:none; }
-    .hero::before,.hero-emb span,.photoband > img,.hero h1 .ac{ animation:none !important; }
+    .hero::before,.bg-emb span,.photoband > img,.hero h1 .ac{ animation:none !important; }
     .hero .eyebrow,.hero h1,.hero p,.hero-actions{ animation:none !important; opacity:1 !important; transform:none !important; filter:none !important; }
-    #intro{ display:none !important; } .hero-fx{ display:none !important; }
+    #intro{ display:none !important; }
     .card-toggle{ animation:none !important; } }
 
   @media (max-width:900px){
@@ -407,14 +409,16 @@
 </head>
 <body>
 <div class="scrollbar" id="scrollbar"></div>
+<div class="bg-emb" aria-hidden="true"><span></span></div>
 
 <!-- КИНОЗАСТАВКА -->
-<div id="intro" aria-hidden="true">
+<div id="intro">
   <div class="in-wrap">
     <img src="assets/logo-mark-white.png" alt="Кибермол" />
-    <div class="in-slogan">Здоровая молодёжь — <b>сильная Россия</b></div>
+    <div class="in-slogan">Здоровая молодёжь —<br><b>сильная Россия</b></div>
+    <button class="in-start" type="button">Начать</button>
   </div>
-  <div class="in-skip">нажмите, чтобы пропустить</div>
+  <div class="in-hint">нажмите в любом месте</div>
 </div>
 
 <!-- ШАПКА -->
@@ -439,8 +443,6 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-emb" aria-hidden="true"><span></span></div>
-  <canvas class="hero-fx" id="heroFx" aria-hidden="true"></canvas>
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow">Молодёжное движение · Москва</span>
@@ -541,9 +543,9 @@
       <h2>Мероприятия</h2>
       <p class="lead" style="margin-top:16px">Анонсы встреч, турниров и акций мы публикуем в сообществе ВКонтакте — здесь они появляются автоматически. Подпишитесь, чтобы быть в курсе.</p>
       <p style="margin-top:18px; font-size:15px; color:var(--muted)">Достаточно опубликовать пост в группе ВК — и он сразу появится на сайте. Отдельно ничего загружать не нужно.</p>
-      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:22px">
-        <a href="#" id="vk-link" class="btn btn-ghost">Открыть сообщество ВК</a>
-        <a href="#" id="max-link" class="btn btn-ghost" aria-label="Сообщество в MAX" style="gap:9px">
+      <div style="display:flex; gap:8px; flex-wrap:nowrap; align-items:center; margin-top:22px">
+        <a href="#" id="vk-link" class="btn btn-ghost" style="flex:1 1 auto; min-width:0; justify-content:center; padding:0 14px; font-size:14px">Открыть сообщество ВК</a>
+        <a href="#" id="max-link" class="btn btn-ghost" aria-label="Сообщество в MAX" style="flex:0 0 auto; gap:8px; padding:0 15px; font-size:14px">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect width="24" height="24" rx="7" fill="url(#maxg)"/><path d="M6.5 16.5v-9l5.5 6 5.5-6v9" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="maxg" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#2D7DFF"/><stop offset="1" stop-color="#8A5CFF"/></linearGradient></defs></svg>
           MAX
         </a>
@@ -730,7 +732,7 @@
     </div>
     <div style="text-align:center; margin-top:30px; padding-top:24px; border-top:1px solid rgba(255,255,255,.12);">
       <img src="assets/studio-symbol.png" alt="Студия звукозаписи Sam Bruev" style="height:94px; width:auto; margin:0 auto 14px; opacity:.92;" />
-      <div style="font-size:15px; font-weight:700; color:rgba(255,255,255,.88);">Настоящее искусство — сильная страна</div>
+      <div style="font-size:15px; font-weight:700; color:rgba(255,255,255,.88);">Большое искусство — сильная страна</div>
       <div style="font-size:13px; color:rgba(255,255,255,.5); margin:5px auto 0; max-width:42ch; text-wrap:balance; text-align:center;">Студия звукозаписи «Sam&nbsp;Bruev» · Москва,&nbsp;Капотня<br />разработка&nbsp;сайта</div>
     </div>
     <div class="copyright" style="text-align:center; border-top:none; margin-top:18px; padding-top:0;">© <span id="year"></span> Кибермол — молодёжное движение</div>
@@ -800,8 +802,8 @@
     document.querySelectorAll('.stat .num').forEach(function(s){sio.observe(s);});
     function up(el){
       var node=el.querySelector('b')||el, raw=node.textContent.trim(), m=raw.match(/\d[\d\s]*/); if(!m) return;
-      var t=parseInt(m[0].replace(/\s/g,''),10), pre=raw.slice(0,m.index), suf=raw.slice(m.index+m[0].length), st=null, d=1100;
-      function step(ts){ if(!st)st=ts; var p=Math.min((ts-st)/d,1); node.textContent=pre+Math.floor(p*t)+suf; if(p<1)requestAnimationFrame(step); else node.textContent=pre+t+suf; }
+      var t=parseInt(m[0].replace(/\s/g,''),10), pre=raw.slice(0,m.index), suf=raw.slice(m.index+m[0].length), st=null, d=550;
+      function step(ts){ if(!st)st=ts; var p=Math.min((ts-st)/d,1); var e=1-Math.pow(1-p,3); node.textContent=pre+Math.floor(e*t)+suf; if(p<1)requestAnimationFrame(step); else node.textContent=pre+t+suf; }
       node.textContent=pre+'0'+suf; requestAnimationFrame(step);
     }
   })();
@@ -873,26 +875,25 @@
     });
   })();
 
-  /* ГЕРОЙ: кинозаставка + искры + 3D-щит (наклон) + скролл-кино */
+  /* ФОНОВЫЙ ЩИТ: держится с тобой при скролле (fixed) + наклон + кинозаставка */
   (function(){
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches;
-    var emb=document.querySelector('.hero-emb');
+    var emb=document.querySelector('.bg-emb');
 
     var intro=document.getElementById('intro');
     if(intro){
       intro.addEventListener('animationend',function(e){ if(e.animationName==='introOut' && intro){ intro.remove(); intro=null; } });
       intro.addEventListener('click',function(){ if(intro) intro.classList.add('gone'); });
-      setTimeout(function(){ if(intro){ intro.remove(); intro=null; } },4600);
     }
     if(reduce) return;
 
-    var tX=0,tY=0,cX=0,cY=0,py=0,sc=1;
+    var tX=0,tY=0,cX=0,cY=0,rot=0;
     (function loop(){
-      if(emb){ cX+=(tX-cX)*0.07; cY+=(tY-cY)*0.07;
-        emb.style.transform='translate(-50%,calc(-50% + '+py.toFixed(1)+'px)) perspective(1000px) rotateX('+cX.toFixed(2)+'deg) rotateY('+cY.toFixed(2)+'deg) scale('+sc.toFixed(3)+')'; }
+      if(emb){ cX+=(tX-cX)*0.06; cY+=(tY-cY)*0.06;
+        emb.style.transform='translate(-50%,-50%) perspective(1100px) rotateX('+cX.toFixed(2)+'deg) rotateY('+cY.toFixed(2)+'deg) rotate('+rot.toFixed(2)+'deg)'; }
       requestAnimationFrame(loop);
     })();
-    function onScroll(){ var y=window.pageYOffset||0; py=y*0.28; sc=1+Math.min(y,900)*0.00055; }
+    function onScroll(){ var y=window.pageYOffset||0; rot=Math.max(-9,Math.min(9,y*0.008)); }
     window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
 
     if(matchMedia('(pointer:fine)').matches){
@@ -906,30 +907,6 @@
         DeviceOrientationEvent.requestPermission().then(function(s){ if(s==='granted') bind(); }).catch(function(){});
       } else { bind(); }
     });
-
-    var cv=document.getElementById('heroFx'); if(!cv) return;
-    var ctx=cv.getContext('2d'), W=1,H=1, DPR=Math.min(window.devicePixelRatio||1,2), mx=-9,my=-9;
-    var spr=document.createElement('canvas'); spr.width=spr.height=26; var s2=spr.getContext('2d');
-    var sg=s2.createRadialGradient(13,13,0,13,13,13); sg.addColorStop(0,'rgba(255,125,125,.95)'); sg.addColorStop(.45,'rgba(225,29,42,.7)'); sg.addColorStop(1,'rgba(225,29,42,0)');
-    s2.fillStyle=sg; s2.fillRect(0,0,26,26);
-    function size(){ var r=cv.getBoundingClientRect(); W=cv.width=Math.max(1,Math.round(r.width*DPR)); H=cv.height=Math.max(1,Math.round(r.height*DPR)); }
-    size(); window.addEventListener('resize',size);
-    var N=Math.max(26,Math.min(58,Math.floor(window.innerWidth/18))), P=[];
-    for(var i=0;i<N;i++) P.push({x:Math.random(),y:Math.random(),r:Math.random()*2.2+0.9,vy:-(Math.random()*7e-4+2e-4),vx:(Math.random()-0.5)*3e-4,a:Math.random()*0.5+0.22});
-    var hero=cv.parentElement;
-    hero.addEventListener('pointermove',function(e){ var r=cv.getBoundingClientRect(); mx=(e.clientX-r.left)/r.width; my=(e.clientY-r.top)/r.height; });
-    hero.addEventListener('pointerleave',function(){ mx=-9; my=-9; });
-    (function draw(){
-      ctx.clearRect(0,0,W,H);
-      for(var i=0;i<P.length;i++){ var p=P[i], dx=mx-p.x, dy=my-p.y, d=Math.sqrt(dx*dx+dy*dy);
-        if(d<0.13){ p.x-=dx*0.03; p.y-=dy*0.03; }
-        p.x+=p.vx; p.y+=p.vy;
-        if(p.y<-0.06){ p.y=1.06; p.x=Math.random(); }
-        if(p.x<-0.06) p.x=1.06; else if(p.x>1.06) p.x=-0.06;
-        var s=p.r*DPR*3.2; ctx.globalAlpha=p.a; ctx.drawImage(spr, p.x*W-s/2, p.y*H-s/2, s, s);
-      }
-      ctx.globalAlpha=1; requestAnimationFrame(draw);
-    })();
   })();
 </script>
 </body>
